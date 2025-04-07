@@ -1,5 +1,7 @@
 # LLM Complete
 
+[![npm version](https://img.shields.io/npm/v/llm-complete.svg)](https://www.npmjs.com/package/llm-complete)
+
 A command-line tool for generating text completions using local LLM models. Supports direct prompts, and file input/output.
 
 ## Purpose
