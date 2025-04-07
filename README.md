@@ -66,6 +66,8 @@ This version has specifically been selected for it's balance of light weight and
 ```bash
 # Clone repository
 git clone https://github.com/besworks/llm-complete.git
+cd llm-complete
+npm link
 ```
 
 OR
