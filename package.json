@@ -1,0 +1,32 @@
+{
+  "name": "llm-complete",
+  "version": "1.0.0",
+  "description": "A command-line tool for generating text completions using local LLM models with GPT4All",
+  "keywords": [
+    "llm",
+    "completion",
+    "text",
+    "gpt4all"
+  ],
+  "homepage": "https://github.com/besworks/llm-complete#readme",
+  "bugs": {
+    "url": "https://github.com/besworks/llm-complete/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/besworks/llm-complete.git"
+  },
+  "license": "MIT",
+  "author": "besworks",
+  "type": "module",
+  "main": "llm-complete.js",
+  "bin": {
+    "llm-complete": "./llm-complete"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "gpt4all": "^4.0.0"
+  }
+}
