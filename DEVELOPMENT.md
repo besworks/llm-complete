@@ -1,6 +1,6 @@
 # Architecture
 
-Spinning up a node app that does completions is pretty straightforward, but for CLI usage I ran into a few usability conditions that eventually led to the following code. I wanted this to be easy to use with a smooth user experience. Below is a complete outline of every code block explaining what it does and the reasoning behind it. I decided to release this a guide for anyone interested in the details. 
+Spinning up a node app that does completions is pretty straightforward, but for CLI usage I ran into a few usability conditions that eventually led to the following code. I wanted this to be easy to use with a smooth user experience. Below is a complete outline of every code block explaining what it does and the reasoning behind it. 
 
 ## Dependencies
 
@@ -54,7 +54,7 @@ const device = process.env.DEVICE ?? 'gpu';
 
 ## Model Configuration
 
-Load a local model using GPT4All bindings. If you want to experiment with different models you could read these values in from ENV or json file easy enough.
+Load a local model using GPT4All bindings. If you want to experiment with different models you can read these values in from ENV.
 
 ```javascript
 // Get model config path
@@ -66,9 +66,8 @@ const modelConfigPath = join(__dirname, "models.json");
 const modelName = process.env.MODEL ?? 'mistral-7b-v0.1.Q4_K_M.gguf';
 const ctx = process.env.CTX ?? 2048; // 2048 is max for Mistral 7b
 
-// Initialize model using GPT4All bindings
 const model = await loadModel(modelName, {
-    modelConfigFile: modelConfigPath, // Per-model settings
+    modelConfigFile: "./models.json", // Per-model settings
     allowDownload: false, // We will manually download gguf file
     verbose: false,       // Supress detailed output from model
     device: device,       // Processing device, set by ENV variable
@@ -77,7 +76,7 @@ const model = await loadModel(modelName, {
 });
 ```
 
-The model must exist in GPT4All's model path. On arch this is `~/.local/share/nomic.ai/GPT4All/`. An entry for this model must exist in **models.json**. You can use the [metadata provided by nomic](https://raw.githubusercontent.com/nomic-ai/gpt4all/main/gpt4all-chat/metadata/models3.json) or specify your own in the following format if your model is not listed. The GPT4All wiki provides find guidance on [configuring custom models](https://github.com/nomic-ai/gpt4all/wiki/Configuring-Custom-Models).
+The model must exist in GPT4All's model path. On arch this is `~/.local/share/nomic.ai/GPT4All/`. An entry for this model must exist in **models.json**. You can use the [metadata provided by nomic](https://raw.githubusercontent.com/nomic-ai/gpt4all/main/gpt4all-chat/metadata/models3.json) or specify your own in the following format if your model is not listed. The GPT4All wiki provides guidance on [configuring custom models](https://github.com/nomic-ai/gpt4all/wiki/Configuring-Custom-Models).
 
 ```json
 [
@@ -101,9 +100,9 @@ The model must exist in GPT4All's model path. On arch this is `~/.local/share/no
 ]
 ```
 
-This project uses [Mistral 7B Base](https://mistral.ai/news/announcing-mistral-7b) converted to [GGUF Format by TheBloke](https://huggingface.co/TheBloke/Mistral-7B-v0.1-GGUF). There are plenty of models to choose from but for lightweight creative writing this one does quite well. It can be run on a decent laptop and is released under the Apache 2.0 license allowing commercial use. There are newer and larger models in this series but this one hits a good balance of resource usage and creativity.
+This project uses [Mistral 7B Base](https://mistral.ai/news/announcing-mistral-7b) converted to [GGUF Format by TheBloke](https://huggingface.co/TheBloke/Mistral-7B-v0.1-GGUF). There are plenty of models to choose from but for lightweight creative writing this one does quite well. It can be run on a decent laptop with no dedicated GPU and is released under the Apache 2.0 license allowing commercial use. There are newer and larger models in this series but this one hits a good balance of resource usage and creativity.
 
-The `systemPrompt` and `chatTemplate` options are not needed for basic completions. More on chat mode in the next article. This script does not generate responses with a personality. You cannot ask it a question and get a well formed response. To use this tool, you feed it incomplete text, and it will complete the text for you.
+The `systemPrompt` and `chatTemplate` options are not needed for basic completions. More on chat mode in the next article. This script does not generate responses with a personality. You cannot ask it a question and get a well formed answer. To use this tool, you feed it incomplete text, and it will complete the text for you.
 
 ### Example Input
 
@@ -181,7 +180,7 @@ if (useFile || append) {
 
 ## Generator Settings
 
-Here you can adjust the quality of your output. There are many resources online discussing these options. ChatGPT can give you a good breakdown if needed. The setting below are reasonable defaults, adjust to your use case.
+Here you can adjust the quality of your output. There are many resources online discussing these options. ChatGPT can give you a good breakdown if needed. The settings below are reasonable defaults, adjust to your use case.
 
 ```javascript
 const predict = process.env.PREDICT ?? 128;
@@ -252,7 +251,7 @@ const rl = readline.createInterface({
 
 ## Input Control Functions
 
-Block all keyboard input while processing and hide the cursor.
+Block all text input from keyboard while processing and hide the cursor.
 
 ```javascript
 function blockInput() {
@@ -266,7 +265,7 @@ function restoreInput() {
 }
 ```
 
-Allow **Ctrl+C** to cancel generation even though all other input is blocked.
+Allow **Ctrl+C** to cancel generation even though other input is blocked.
 
 ```javascript
 rl.input.on('data', key => {
