@@ -9,6 +9,8 @@ Uses minimal imports. [GPT4All](https://www.nomic.ai/gpt4all) and it's [node bin
 ```javascript
 import { loadModel, createCompletionStream } from 'gpt4all';
 import { open as openFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
 import readline from 'node:readline';
 ```
 
@@ -55,11 +57,18 @@ const device = process.env.DEVICE ?? 'gpu';
 Load a local model using GPT4All bindings. If you want to experiment with different models you could read these values in from ENV or json file easy enough.
 
 ```javascript
+// Get model config path
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const modelConfigPath = join(__dirname, "models.json");
+
+// Select Model
 const modelName = process.env.MODEL ?? 'mistral-7b-v0.1.Q4_K_M.gguf';
 const ctx = process.env.CTX ?? 2048; // 2048 is max for Mistral 7b
 
+// Initialize model using GPT4All bindings
 const model = await loadModel(modelName, {
-    modelConfigFile: "./models.json", // Per-model settings
+    modelConfigFile: modelConfigPath, // Per-model settings
     allowDownload: false, // We will manually download gguf file
     verbose: false,       // Supress detailed output from model
     device: device,       // Processing device, set by ENV variable

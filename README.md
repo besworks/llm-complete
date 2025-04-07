@@ -90,7 +90,7 @@ llm-complete -f input.txt >> output.txt # append
 # Append completion to input file
 llm-complete -a story.txt
 
-# Select processing device [cpu|gpu]
+# Select processing device, default gpu, falls back to cpu
 DEVICE=cpu llm-complete -f input.txt
 
 # Customize buffer size
