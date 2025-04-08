@@ -1,6 +1,6 @@
 {
   "name": "llm-complete",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A command-line tool for generating text completions using local LLM models with GPT4All",
   "keywords": [
     "llm",
