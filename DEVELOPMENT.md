@@ -194,8 +194,7 @@ const settings = {
     repeatLastN: 64,     // Lookback window for repeats
     nBatch: 2048,        // Tokens to process concurrently, higher values use more RAM
     nPredict: predict,   // Maximum tokens to generate, increase for longer output
-    contextErase: 0.75,  // Percentage of past context to erase if exceeded
-    promptTemplate: '%1' // Can override prompt template from config file
+    contextErase: 0.75  // Percentage of past context to erase if exceeded
 };
 ```
 
